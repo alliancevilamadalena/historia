@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nossa História · Alliance Jiu Jitsu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --bg-2:#101012;
+    --panel:#151517;
+    --panel-2:#1b1b1e;
+    --line:rgba(255,255,255,.10);
+    --line-strong:rgba(255,255,255,.20);
+    --text:#f4f3f1;
+    --muted:#a9a7a3;
+    --faint:#6f6d69;
+    --gold:#c2a36b;
+    --gold-dim:#9a8456;
+    --white:#fff;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    line-height:1.7;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:clip;
+  }
+  ::selection{background:var(--gold);color:#000}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- Tipografia utilitária ---------- */
+  .display{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.01em;line-height:1;text-transform:uppercase}
+  .eyebrow{
+    font-family:'Oswald',sans-serif;font-weight:500;text-transform:uppercase;
+    letter-spacing:.34em;font-size:.72rem;color:var(--gold);
+    display:inline-flex;align-items:center;gap:.7rem;
+  }
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--gold);opacity:.7}
+  .serif{font-family:'Cormorant Garamond',serif}
+
+  /* ---------- Navegação ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px clamp(18px,5vw,52px);
+    background:linear-gradient(to bottom,rgba(10,10,11,.92),rgba(10,10,11,.55) 70%,transparent);
+    backdrop-filter:blur(6px);
+    transition:background .3s ease,padding .3s ease;
+  }
+  nav.solid{background:rgba(10,10,11,.96);border-bottom:1px solid var(--line);padding-top:12px;padding-bottom:12px}
+  .nav-brand{display:flex;align-items:center;gap:12px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.22em;font-size:.78rem;color:var(--text)}
+  .nav-brand img{width:26px;opacity:.95;mix-blend-mode:screen}
+  .nav-links{display:flex;gap:clamp(14px,2.4vw,34px);font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.18em;font-size:.74rem}
+  .nav-links a{color:var(--muted);position:relative;padding:4px 0;transition:color .25s}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--gold);transition:width .3s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-links a:hover::after{width:100%}
+  @media(max-width:680px){.nav-links{display:none}}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:120px clamp(20px,6vw,40px) 80px;position:relative;overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(ellipse 70% 60% at 50% 30%,rgba(60,60,66,.35),transparent 70%);
+    z-index:0;
+  }
+  .hero-watermark{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    opacity:.035;z-index:0;pointer-events:none;
+  }
+  .hero-watermark img{width:min(78vw,720px);mix-blend-mode:screen}
+  .hero-inner{position:relative;z-index:2;max-width:880px;display:flex;flex-direction:column;align-items:center}
+  .hero-logo{width:84px;margin-bottom:34px;mix-blend-mode:screen;opacity:0;transform:translateY(18px);animation:rise .9s .1s forwards ease}
+  .hero h1{
+    font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+    font-size:clamp(2.9rem,9.5vw,7.5rem);line-height:.92;letter-spacing:.02em;
+    opacity:0;transform:translateY(24px);animation:rise 1s .25s forwards ease;
+  }
+  .hero h1 .thin{display:block;font-weight:300;color:var(--gold);font-size:.34em;letter-spacing:.5em;margin-bottom:.7em}
+  .hero-sub{
+    margin-top:30px;max-width:620px;font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(1.15rem,2.6vw,1.6rem);color:#dad8d4;line-height:1.45;
+    opacity:0;transform:translateY(20px);animation:rise 1s .5s forwards ease;
+  }
+  .hero-lead{
+    margin-top:34px;max-width:680px;color:var(--muted);font-size:1.02rem;
+    opacity:0;transform:translateY(20px);animation:rise 1s .7s forwards ease;
+  }
+  .scrolldown{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:2;
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.3em;font-size:.64rem;color:var(--faint);
+    display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:fade 1s 1.1s forwards}
+  .scrolldown .bar{width:1px;height:42px;background:linear-gradient(var(--gold),transparent);animation:pulse 1.8s infinite}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @keyframes fade{to{opacity:1}}
+  @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+  /* ---------- Seções ---------- */
+  section.chapter{padding:clamp(70px,11vw,140px) clamp(20px,6vw,40px);position:relative}
+  .wrap{max-width:var(--maxw);margin:0 auto}
+  .chapter-head{max-width:760px;margin-bottom:clamp(48px,7vw,84px)}
+  .chapter-head h2{
+    font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;
+    font-size:clamp(2rem,6vw,4rem);line-height:1.02;letter-spacing:.01em;margin-top:22px;
+  }
+  .chapter-head p{margin-top:22px;color:var(--muted);font-size:1.05rem;max-width:620px}
+
+  .alt-bg{background:var(--bg-2)}
+
+  /* ---------- Linhagem (timeline vertical) ---------- */
+  .lineage{position:relative;display:flex;flex-direction:column;gap:clamp(54px,8vw,96px)}
+  .lineage::before{
+    content:"";position:absolute;left:clamp(26px,4.2vw,50%);top:8px;bottom:8px;width:1px;
+    background:linear-gradient(var(--gold-dim),var(--line) 80%);transform:translateX(-.5px);
+  }
+  .master{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+  .master .node{
+    position:absolute;left:50%;top:50%;width:13px;height:13px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--gold);transform:translate(-50%,-50%);z-index:3;
+  }
+  .master .node::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--line-strong)}
+  .portrait{position:relative}
+  .portrait .frame{
+    position:relative;overflow:hidden;border:1px solid var(--line);background:#000;
+    aspect-ratio:4/5;max-width:340px;
+  }
+  .portrait .frame img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);
+    transition:filter .6s ease,transform .6s ease}
+  .master:hover .frame img{filter:grayscale(.15) contrast(1.05);transform:scale(1.03)}
+  .portrait .num{
+    position:absolute;font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(3.4rem,8vw,6rem);
+    color:transparent;-webkit-text-stroke:1px rgba(194,163,107,.45);line-height:1;z-index:2;
+    top:-.35em;left:-.12em;pointer-events:none;
+  }
+  .master .body{max-width:480px}
+  .master .role{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:.72rem;color:var(--gold)}
+  .master .name{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;font-size:clamp(1.5rem,3.6vw,2.1rem);line-height:1.05;margin:8px 0 4px}
+  .master .years{font-family:'Oswald',sans-serif;letter-spacing:.18em;font-size:.78rem;color:var(--muted);margin-bottom:16px}
+  .master .desc{color:var(--muted);font-size:.98rem}
+  .master .desc strong{color:var(--text);font-weight:500}
+  /* alterna lados */
+  .master:nth-child(even){direction:rtl}
+  .master:nth-child(even) > *{direction:ltr}
+  .master:nth-child(even) .portrait{justify-self:end}
+  @media(max-width:760px){
+    .lineage::before{left:26px}
+    .master{grid-template-columns:1fr;gap:22px;padding-left:58px}
+    .master .node{left:26px}
+    .master:nth-child(even){direction:ltr}
+    .master:nth-child(even) .portrait{justify-self:start}
+    .portrait .frame{max-width:240px}
+  }
+
+  /* ---------- Pull quote ---------- */
+  .pullquote{
+    max-width:880px;margin:clamp(50px,8vw,90px) auto;text-align:center;
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.5rem,4vw,2.6rem);
+    line-height:1.35;color:#e9e7e3;position:relative;padding:0 clamp(20px,6vw,60px);
+  }
+  .pullquote::before{content:"\201C";position:absolute;top:-.5em;left:50%;transform:translateX(-50%);
+    font-size:4em;color:var(--gold);opacity:.25;font-family:'Cormorant Garamond',serif}
+  .pullquote cite{display:block;margin-top:24px;font-style:normal;font-family:'Oswald',sans-serif;
+    text-transform:uppercase;letter-spacing:.24em;font-size:.74rem;color:var(--gold)}
+
+  /* ---------- Texto de história em colunas ---------- */
+  .prose-cols{columns:2;column-gap:clamp(34px,5vw,64px);max-width:920px;color:var(--muted);font-size:1rem}
+  .prose-cols p{margin-bottom:1.2em;break-inside:avoid}
+  .prose-cols p strong{color:var(--text);font-weight:500}
+  @media(max-width:720px){.prose-cols{columns:1}}
+
+  /* ---------- Evolução do logo ---------- */
+  .logo-evo{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(20px,4vw,48px);align-items:center;
+    max-width:760px;margin:clamp(40px,6vw,70px) auto;}
+  .logo-card{background:var(--panel);border:1px solid var(--line);padding:30px 26px;text-align:center}
+  .logo-card .badge{background:#fff;display:inline-flex;padding:14px 16px;margin-bottom:18px;min-height:74px;align-items:center;justify-content:center}
+  .logo-card.new .badge{background:#000;border:1px solid var(--line-strong)}
+  .logo-card .badge img{height:46px;width:auto}
+  .logo-card h4{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:.82rem;color:var(--text);margin-bottom:8px}
+  .logo-card p{font-size:.84rem;color:var(--muted)}
+  .logo-arrow{font-family:'Oswald',sans-serif;color:var(--gold);font-size:1.6rem;display:flex;align-items:center;justify-content:center}
+  @media(max-width:620px){.logo-evo{grid-template-columns:1fr}.logo-arrow{transform:rotate(90deg)}}
+
+  /* ---------- Timeline horizontal ---------- */
+  .timeline{position:relative;margin:clamp(40px,6vw,72px) 0 0;padding-top:8px}
+  .tl-track{display:flex;gap:0;overflow-x:auto;padding-bottom:18px;scrollbar-width:thin}
+  .tl-item{flex:1 0 150px;position:relative;padding:34px 18px 0;}
+  .tl-item::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:var(--line)}
+  .tl-item::after{content:"";position:absolute;top:-5px;left:0;width:10px;height:10px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--gold)}
+  .tl-item .yr{font-family:'Oswald',sans-serif;font-weight:600;font-size:1.5rem;color:var(--gold);letter-spacing:.04em}
+  .tl-item .ev{margin-top:8px;color:var(--muted);font-size:.9rem;max-width:200px}
+  .tl-item .ev strong{color:var(--text);font-weight:500}
+
+  /* ---------- Stats ---------- */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);
+    margin-top:clamp(40px,6vw,72px)}
+  .stat{background:var(--bg-2);padding:clamp(28px,4vw,44px) 26px;text-align:center}
+  .stat .big{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(2.4rem,6vw,3.6rem);line-height:1;color:var(--text)}
+  .stat .big span{color:var(--gold)}
+  .stat .lbl{margin-top:12px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;color:var(--muted)}
+  @media(max-width:620px){.stats{grid-template-columns:1fr}}
+
+  /* ---------- Matrizes ---------- */
+  .matrizes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:clamp(40px,6vw,64px)}
+  .matriz{background:var(--panel);border:1px solid var(--line);padding:28px 26px;transition:border-color .3s,transform .3s}
+  .matriz:hover{border-color:var(--gold-dim);transform:translateY(-4px)}
+  .matriz .city{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;font-size:1.15rem;letter-spacing:.04em}
+  .matriz .who{margin-top:6px;color:var(--gold);font-size:.86rem;font-family:'Oswald',sans-serif;letter-spacing:.12em;text-transform:uppercase}
+  @media(max-width:720px){.matrizes{grid-template-columns:1fr}}
+
+  /* ---------- Fundadores ---------- */
+  .founders-photo{position:relative;max-width:980px;margin:0 auto clamp(40px,6vw,70px);border:1px solid var(--line);overflow:hidden;background:#000}
+  .founders-photo img{width:100%;filter:contrast(1.04)}
+  .founders-photo .cap{position:absolute;left:0;right:0;bottom:0;padding:50px 30px 22px;
+    background:linear-gradient(transparent,rgba(0,0,0,.85));font-family:'Oswald',sans-serif;
+    text-transform:uppercase;letter-spacing:.22em;font-size:.78rem;color:#e7e5e1;text-align:center}
+  .founder-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .fcard{background:var(--panel);border:1px solid var(--line);padding:34px 30px;position:relative;transition:border-color .3s,transform .3s}
+  .fcard:hover{border-color:var(--gold-dim);transform:translateY(-4px)}
+  .fcard .belt{width:46px;height:4px;background:linear-gradient(90deg,#b81c1c 0 60%,#111 60%);margin-bottom:22px;border:1px solid rgba(255,255,255,.12)}
+  .fcard h3{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;font-size:1.3rem;line-height:1.1}
+  .fcard .matriz-tag{margin-top:8px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;color:var(--gold)}
+  .fcard p{margin-top:18px;color:var(--muted);font-size:.95rem}
+  @media(max-width:760px){.founder-cards{grid-template-columns:1fr}}
+
+  /* ---------- Footer ---------- */
+  footer{border-top:1px solid var(--line);padding:clamp(50px,8vw,80px) clamp(20px,6vw,40px) 40px;text-align:center;background:var(--bg-2)}
+  footer .flogo{width:64px;margin:0 auto 24px;opacity:.9;mix-blend-mode:screen}
+  footer .tagline{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.4em;font-size:.8rem;color:var(--muted)}
+  footer .tagline span{color:var(--gold);margin:0 .5em}
+  footer .src{margin-top:18px;color:var(--faint);font-size:.78rem}
+  footer .credit{margin-top:30px;padding-top:24px;border-top:1px solid var(--line);font-size:.74rem;color:var(--faint)}
+  footer .credit a{color:var(--muted);border-bottom:1px solid var(--line-strong);padding-bottom:1px}
+  footer .credit a:hover{color:var(--gold)}
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<nav id="nav">
+  <a class="nav-brand" href="#topo">
+    <img src="historia-assets/logo_clean.png" alt="Alliance Jiu Jitsu">
+    <span>Nossa História</span>
+  </a>
+  <div class="nav-links">
+    <a href="#origem">A Origem</a>
+    <a href="#alliance">A Alliance</a>
+    <a href="#fundadores">Fundadores</a>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero" id="topo">
+  <div class="hero-watermark"><img src="historia-assets/logo_clean.png" alt=""></div>
+  <div class="hero-inner">
+    <img class="hero-logo" src="historia-assets/logo_clean.png" alt="Alliance Jiu Jitsu">
+    <h1><span class="thin">Alliance Jiu Jitsu</span>Nossa História</h1>
+    <p class="hero-sub">Nossa linhagem carrega histórias de orgulho e gratidão a todos que nos trouxeram até aqui.</p>
+    <p class="hero-lead">A nossa história vale a pena ser contada, não apenas por ser uma bela história, mas por termos consciência de que uma empresa só pode ter sucesso se conta alguma história — e mais ainda se essa história é verídica, cheia de significados, de exemplos e de amor.</p>
+  </div>
+  <div class="scrolldown"><span>A Origem</span><span class="bar"></span></div>
+</header>
+
+<!-- ===================== CAP 01 — A ORIGEM ===================== -->
+<section class="chapter" id="origem">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <span class="eyebrow">Capítulo 01 &middot; A Origem</span>
+      <h2>Da terra do sol nascente<br>às raízes do Brasil</h2>
+      <p>A história do Jiu Jitsu começa muito antes da Alliance — numa linhagem de mestres que atravessou o oceano e moldou uma arte. Conheça os nomes que abriram o caminho.</p>
+    </div>
+
+    <div class="lineage">
+
+      <!-- Conde Koma -->
+      <article class="master reveal">
+        <span class="node"></span>
+        <div class="portrait">
+          <span class="num">01</span>
+          <div class="frame"><img src="historia-assets/face_koma.png" alt="Mitsuyo Maeda, o Conde Koma"></div>
+        </div>
+        <div class="body">
+          <div class="role">O Pioneiro</div>
+          <div class="name">Mitsuyo Maeda<br>"Conde Koma"</div>
+          <div class="years">Japão &rarr; Brasil</div>
+          <p class="desc">A história do Jiu Jitsu começa com Mitsuyo Maeda, o <strong>Conde Koma</strong>. Nascido no Japão, foi um dos principais discípulos de Jigoro Kano. Migrou para o Brasil no início do século XX, aportando em Belém do Pará, onde conheceu o patriarca da família, Gastão Gracie. Como forma de agradecimento pela ajuda em se estabelecer no país, comprometeu-se a ensinar o Jiu Jitsu ao seu filho mais velho, <strong>Carlos Gracie</strong>. Nasce aí o Jiu Jitsu Brasileiro.</p>
+        </div>
+      </article>
+
+      <!-- Carlos Gracie -->
+      <article class="master reveal">
+        <span class="node"></span>
+        <div class="portrait">
+          <span class="num">02</span>
+          <div class="frame"><img src="historia-assets/face_carlos.png" alt="Grande Mestre Carlos Gracie"></div>
+        </div>
+        <div class="body">
+          <div class="role">O Patriarca</div>
+          <div class="name">Grande Mestre<br>Carlos Gracie</div>
+          <div class="years">1902 &mdash; 1994</div>
+          <p class="desc">Precursor dos lutadores que tornaram a família Gracie mundialmente famosa. Patriarca da família, foi responsável por ensinar Jiu Jitsu aos irmãos Gastão, Oswaldo e George. Em <strong>1925</strong>, abriu sua primeira academia e começou a treinar e ensinar suas técnicas a outros. É reconhecido por ter criado a base para a evolução do Jiu Jitsu — uma das artes mais influentes e respeitadas da história. Faleceu em 1994, mas sua influência continua viva, já que o Jiu Jitsu Brasileiro e sua comunidade são vistos por todo o mundo.</p>
+        </div>
+      </article>
+
+      <!-- Hélio Gracie -->
+      <article class="master reveal">
+        <span class="node"></span>
+        <div class="portrait">
+          <span class="num">03</span>
+          <div class="frame"><img src="historia-assets/face_helio.png" alt="Grande Mestre Hélio Gracie"></div>
+        </div>
+        <div class="body">
+          <div class="role">O Inovador</div>
+          <div class="name">Grande Mestre<br>Hélio Gracie</div>
+          <div class="years">1913 &mdash; 2009</div>
+          <p class="desc">Nasceu em Belém do Pará em 1913 e começou a praticar Jiu Jitsu aos 15 anos. Desenvolveu sua própria forma, baseada em <strong>técnicas de submissão e alavancas</strong> em vez de força bruta — permitindo a pessoas de todos os tamanhos se defenderem contra oponentes maiores e mais fortes. Enfrentou adversários de diferentes artes marciais para provar a eficácia do método e popularizou o Jiu Jitsu no Brasil e no mundo. Faleceu em 2009, mas sua influência permanece, especialmente na cultura do Jiu Jitsu.</p>
+        </div>
+      </article>
+
+      <!-- Rolls Gracie -->
+      <article class="master reveal">
+        <span class="node"></span>
+        <div class="portrait">
+          <span class="num">04</span>
+          <div class="frame"><img src="historia-assets/face_rolls.png" alt="Grande Mestre Rolls Gracie"></div>
+        </div>
+        <div class="body">
+          <div class="role">O Mestre dos Mestres</div>
+          <div class="name">Grande Mestre<br>Rolls Gracie</div>
+          <div class="years">1951 &mdash; 1982</div>
+          <p class="desc">Filho de Carlos e criado por Hélio, nasceu no Rio de Janeiro em 1951 e praticou Jiu Jitsu desde a infância. Tornou-se um lutador habilidoso e figura proeminente da arte, conhecido por sua abordagem <strong>criativa e inovadora</strong> e por combinar elementos de diferentes artes marciais — um dos precursores do Jiu Jitsu esportivo. Falecido precocemente aos 31 anos, em 1982, deixou gigante influência: formou apenas <strong>6 faixas-pretas</strong>, entre eles nosso Mestre Romero Jacaré, fundador da Alliance Jiu Jitsu.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CAP 02 — A ALLIANCE ===================== -->
+<section class="chapter alt-bg" id="alliance">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <span class="eyebrow">Capítulo 02 &middot; A Aliança</span>
+      <h2>O nascimento<br>da Alliance</h2>
+      <p>De um discípulo de Rolls Gracie a uma associação presente em todos os continentes — a trajetória de um legado que se transformou em equipe.</p>
+    </div>
+
+    <div class="prose-cols reveal">
+      <p><strong>Mestre Romero Jacaré.</strong> Nascido em 1952, começou seu treinamento aos 11 anos de idade. Com 16 anos, ingressou na Escola Gracie, famosa em Copacabana, onde cresceu.</p>
+      <p>Jacaré e os Gracies viviam no mesmo bairro — por isso, conheceu todos eles. Treinava com Carlos Gracie Jr., Crolin Gracie, Fabio Santos, Mauricio Gomes, os Irmãos Machado, Rickson Gracie e muitos outros.</p>
+      <p>Depois de receber a faixa-preta, Mestre Jacaré passou por uma enorme provação ao perder seu Mestre Rolls tragicamente — história que até hoje traz muita emoção. É a prova de um guerreiro que aprendeu com o Jiu Jitsu a não desistir.</p>
+      <p>Em <strong>1989</strong>, Mestre Jacaré graduou seu primeiro faixa-preta, o Mestre Fabio Gurgel; no ano seguinte, graduou o Mestre Alexandre Paiva. A partir desse ponto, os três dedicaram suas vidas a ensinar o Jiu Jitsu, cada um administrando sua própria academia e colecionando títulos.</p>
+    </div>
+
+    <div class="pullquote reveal">
+      Estamos aqui porque ele enfrentou a dor e seguiu o legado de seu Mestre.
+      <cite>O legado de Rolls Gracie</cite>
+    </div>
+
+    <div class="prose-cols reveal">
+      <p>Os caminhos separados, porém, não faziam sentido — já que todos vinham de uma mesma origem. Pensando nisso, no ano de <strong>1993</strong>, os três, juntamente a outros atletas, decidiram formar uma aliança para defender uma mesma bandeira. Surgia então a <strong>Equipe Alliance Jiu Jitsu</strong>.</p>
+      <p>Duas décadas depois, em <strong>2014</strong>, como fruto do sucesso, iniciou-se a expansão com a abertura de filiais ao redor do mundo. Os fundadores decidiram fundar a <strong>Associação Alliance Jiu Jitsu</strong>, com o objetivo de unificar a gestão dos filiados e padronizar o licenciamento do método de ensino e o uso da marca.</p>
+      <p>A nossa missão continua sendo a implementação da Metodologia em todas as filiais, para que juntos possamos impactar positivamente o maior número de pessoas.</p>
+    </div>
+
+    <!-- Evolução do logo -->
+    <div class="logo-evo reveal">
+      <div class="logo-card old">
+        <div class="badge"><img src="historia-assets/logo_old.png" alt="Primeiro logo da Alliance"></div>
+        <h4>O Primeiro Logo</h4>
+        <p>O logo original, hoje chamado de "antigo" — ainda sem a palavra Jiu Jitsu.</p>
+      </div>
+      <div class="logo-arrow">&rarr;</div>
+      <div class="logo-card new">
+        <div class="badge"><img src="historia-assets/logo_clean.png" alt="Logo atual da Alliance Jiu Jitsu"></div>
+        <h4>O Logo Atual</h4>
+        <p>Após o registro da marca, foi atualizado para incluir o segmento de atuação: "Jiu Jitsu".</p>
+      </div>
+    </div>
+
+    <!-- Linha do tempo -->
+    <div class="timeline reveal">
+      <div class="tl-track">
+        <div class="tl-item"><div class="yr">1977</div><div class="ev">Início da trajetória de <strong>Jacaré</strong> rumo à faixa-preta.</div></div>
+        <div class="tl-item"><div class="yr">1982</div><div class="ev">Falecimento do <strong>Mestre Rolls Gracie</strong>, aos 31 anos.</div></div>
+        <div class="tl-item"><div class="yr">1989</div><div class="ev">Jacaré gradua seu 1º faixa-preta: <strong>Fabio Gurgel</strong>.</div></div>
+        <div class="tl-item"><div class="yr">1990</div><div class="ev">Graduação do <strong>Mestre Alexandre Paiva</strong>.</div></div>
+        <div class="tl-item"><div class="yr">1993</div><div class="ev">Nasce a <strong>Equipe Alliance Jiu Jitsu</strong>.</div></div>
+        <div class="tl-item"><div class="yr">2014</div><div class="ev">Início da expansão e abertura de filiais pelo mundo.</div></div>
+        <div class="tl-item"><div class="yr">Hoje</div><div class="ev"><strong>Associação Alliance</strong> em todos os continentes.</div></div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats reveal">
+      <div class="stat"><div class="big">+<span>30</span>mil</div><div class="lbl">Alunos no mundo</div></div>
+      <div class="stat"><div class="big"><span>13</span></div><div class="lbl">Títulos mundiais</div></div>
+      <div class="stat"><div class="big"><span>5</span></div><div class="lbl">Continentes</div></div>
+    </div>
+
+    <!-- Matrizes -->
+    <div class="matrizes reveal">
+      <div class="matriz"><div class="city">Alliance Atlanta</div><div class="who">Mestre Jacaré &middot; USA</div></div>
+      <div class="matriz"><div class="city">Alliance São Paulo</div><div class="who">Mestre Fabio Gurgel</div></div>
+      <div class="matriz"><div class="city">Alliance Rio</div><div class="who">Mestre Alexandre Paiva "Gigi"</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CAP 03 — FUNDADORES ===================== -->
+<section class="chapter" id="fundadores">
+  <div class="wrap">
+    <div class="chapter-head reveal" style="margin-left:auto;margin-right:auto;text-align:center;max-width:680px">
+      <span class="eyebrow" style="justify-content:center">Capítulo 03 &middot; Pessoas</span>
+      <h2>Os Fundadores</h2>
+      <p style="margin-left:auto;margin-right:auto">Três mestres, uma mesma origem. Os nomes por trás da maior associação de Jiu Jitsu do mundo.</p>
+    </div>
+
+    <figure class="founders-photo reveal">
+      <img src="historia-assets/founders.png" alt="Os três mestres fundadores da Alliance Jiu Jitsu">
+      <figcaption class="cap">Os três mestres fundadores da Alliance Jiu Jitsu</figcaption>
+    </figure>
+
+    <div class="founder-cards">
+      <article class="fcard reveal">
+        <div class="belt"></div>
+        <h3>Mestre<br>Romero Jacaré</h3>
+        <div class="matriz-tag">Matriz Alliance Atlanta</div>
+        <p>Fundador da Matriz Alliance Atlanta. Atualmente aposentado, mora em Florianópolis, Santa Catarina, e continua realizando seminários.</p>
+      </article>
+      <article class="fcard reveal">
+        <div class="belt"></div>
+        <h3>Mestre<br>Alexandre Paiva</h3>
+        <div class="matriz-tag">Matriz Alliance Rio</div>
+        <p>Fundador da Matriz Alliance Rio. Atualmente lidera duas novas filiais nos Estados Unidos, em Boise, e segue dando aulas e realizando seminários.</p>
+      </article>
+      <article class="fcard reveal">
+        <div class="belt"></div>
+        <h3>Mestre<br>Fabio Gurgel</h3>
+        <div class="matriz-tag">Matriz Alliance São Paulo</div>
+        <p>Fundador da Matriz Alliance São Paulo. Atualmente é CEO da Associação Alliance, mora em São Paulo e segue dando aulas e realizando seminários.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <img class="flogo" src="historia-assets/logo_clean.png" alt="Alliance Jiu Jitsu">
+  <div class="tagline">Valores<span>&middot;</span>Metodologia<span>&middot;</span>Pessoas</div>
+  <div class="src">Onboarding Alliance Jiu Jitsu &middot; Nossa História &middot; páginas 6 &ndash; 8</div>
+  <div class="credit">
+    Desenvolvido por <a href="https://wa.me/5511974858982" target="_blank" rel="noopener">the mat society</a>
+  </div>
+</footer>
+
+<script>
+  // Nav muda de fundo ao rolar
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('solid', window.scrollY > 40);
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.14, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
