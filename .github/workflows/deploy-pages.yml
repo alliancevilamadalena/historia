@@ -1,0 +1,71 @@
+name: Deploy Pages (auto-retry)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Stage site (exclui .git e .github do que vai ao ar)
+        run: |
+          mkdir -p _site
+          rsync -a --exclude='.git' --exclude='.github' --exclude='_site' ./ _site/
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy (tentativa 1)
+        id: dep1
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Espera antes de re-tentar (2)
+        if: steps.dep1.outcome == 'failure'
+        run: sleep 25
+
+      - name: Deploy (tentativa 2)
+        id: dep2
+        if: steps.dep1.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Espera antes de re-tentar (3)
+        if: steps.dep1.outcome == 'failure' && steps.dep2.outcome == 'failure'
+        run: sleep 25
+
+      - name: Deploy (tentativa 3)
+        id: dep3
+        if: steps.dep1.outcome == 'failure' && steps.dep2.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Espera antes de re-tentar (4)
+        if: steps.dep1.outcome == 'failure' && steps.dep2.outcome == 'failure' && steps.dep3.outcome == 'failure'
+        run: sleep 25
+
+      - name: Deploy (tentativa 4 - final, falha a run se cair)
+        id: dep4
+        if: steps.dep1.outcome == 'failure' && steps.dep2.outcome == 'failure' && steps.dep3.outcome == 'failure'
+        uses: actions/deploy-pages@v4
